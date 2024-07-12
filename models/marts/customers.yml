@@ -23,6 +23,7 @@ models:
       - name: lifetime_tax_paid
         description: The sum of all the tax portion of every order a customer has placed.
       - name: lifetime_spend
+        label: 
         description: The sum of all the order totals (including tax) that a customer has ever placed.
       - name: customer_type
         description: Options are 'new' or 'returning', indicating if a customer has ordered more than once or has only placed their first order to date.
@@ -44,46 +45,54 @@ semantic_models:
     dimensions:
       - name: customer_name
         type: categorical
+        label: 顧客名
+        description: 顧客のフルネーム
       - name: customer_type
         type: categorical
+        label: 顧客タイプ
+        description: オプションはnewまたはreturningであり、顧客が複数回注文したことがあるか、または今日初めて注文したかを示します。
       - name: first_ordered_at
         type: time
+        label: 初回注文日
+        description: 顧客の最初の注文日
         type_params:
           time_granularity: day
       - name: last_ordered_at
         type: time
+        label: 最終注文日
+        description: 顧客の最後の注文日
         type_params:
           time_granularity: day
     measures:
       - name: customers
-        description: Count of unique customers
+        description: Customerの合計
         agg: count_distinct
       - name: count_lifetime_orders
-        description: Total count of orders per customer.
+        description: 顧客ごとの合計注文数
         agg: sum
       - name: lifetime_spend_pretax
-        description: Customer lifetime spend before taxes.
+        description: 顧客の税を含まない合計購入額
         agg: sum
       - name: lifetime_spend
         agg: sum
-        description: Gross customer lifetime spend inclusive of taxes.
+        description: 顧客の税を含む合計購入額
 
 metrics:
   - name: lifetime_spend_pretax
-    description: Customer's lifetime spend before tax
-    label: LTV Pre-tax
+    description: 顧客の税を含まない合計購入額
+    label: 合計購入額(税抜き)
     type: simple
     type_params:
       measure: lifetime_spend_pretax
   - name: count_lifetime_orders
     description: Count of lifetime orders
-    label: Count Lifetime Orders
+    label: 合計注文回数
     type: simple
     type_params:
       measure: count_lifetime_orders
   - name: average_order_value
     description: LTV pre-tax / number of orders
-    label: Average Order Value
+    label: 平均注文金額
     type: derived
     type_params:
       metrics:
