@@ -95,17 +95,27 @@ semantic_models:
       - name: ordered_at
         expr: ordered_at
         type: time
+        label: 注文日
+        description: 注文された日付
         type_params:
           time_granularity: day
       - name: order_total_dim
         type: categorical
+        label: 売上（税込み）
+        description: 税込みの売上
         expr: order_total
       - name: is_food_order
         type: categorical
+        label: 食べ物の注文はあるか？（True/False）
+        description: 食べ物の注文はあったかどうかのフラグ
       - name: is_drink_order
         type: categorical
+        label: 飲み物の注文はあるか？（True/False）
+        description: 飲み物の注文はあったかどうかのフラグ
       - name: customer_order_number
         type: categorical
+        label: 注文番号
+        description: 顧客が注文した際の注文番号
     measures:
       - name: order_total
         description: The total amount for each order including taxes.
@@ -122,44 +132,44 @@ semantic_models:
 
 metrics:
   - name: order_total
-    description: Sum of total order amonunt. Includes tax + revenue.
+    description: 注文総額の合計。税金と売上を含む。
     type: simple
-    label: Order Total
+    label: 売上（税込み）
     type_params:
       measure: order_total
   - name: new_customer_orders
-    description: New customer's first order count
-    label: New Customers
+    description: 新規顧客の初注文数の合計
+    label: 新規顧客による合計注文数
     type: simple
     type_params:
       measure: order_count
     filter: |
       {{ Dimension('order_id__customer_order_number') }} = 1
   - name: large_orders
-    description: "Count of orders with order total over 20."
+    description: 注文金額が20を超える注文数の合計
     type: simple
-    label: Large Orders
+    label: 大規模注文数
     type_params:
       measure: order_count
     filter: |
       {{ Dimension('order_id__order_total_dim') }} >= 20
   - name: orders
-    description: Count of orders.
-    label: Orders
+    description: 注文数の合計
+    label: 注文数
     type: simple
     type_params:
       measure: order_count
   - name: food_orders
-    description: Count of orders that contain food order items
-    label: Food Orders
+    description: 食べ物の注文を含む注文数の合計
+    label: 注文数（食べ物を含む）
     type: simple
     type_params:
       measure: order_count
     filter: |
       {{ Dimension('order_id__is_food_order') }} = true
   - name: drink_orders
-    description: Count of orders that contain drink order items
-    label: Drink Orders
+    description: 飲み物の注文を含む注文数の合計
+    label: 注文数（飲み物を含む）
     type: simple
     type_params:
       measure: order_count
