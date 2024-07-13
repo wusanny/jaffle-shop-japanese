@@ -57,12 +57,18 @@ semantic_models:
       - name: ordered_at
         expr: ordered_at
         type: time
+        label: 注文日
+        description: 注文した日時
         type_params:
           time_granularity: day
       - name: is_food_item
         type: categorical
+        label: 食べ物か？（True/False）
+        description: 食べ物かどうかを表すフラグ
       - name: is_drink_item
         type: categorical
+        label: 飲み物か？（True/False）
+        description: 飲み物かどうかを表すフラグ
     measures:
       - name: revenue
         description: The revenue generated for each order item. Revenue is calculated as a sum of revenue associated with each product in an order.
@@ -84,47 +90,47 @@ semantic_models:
 metrics:
   # Simple metrics
   - name: revenue
-    description: Sum of the product revenue for each order item. Excludes tax.
+    description: 各注文商品の商品売上の合計。税抜き。
     type: simple
-    label: Revenue
+    label: 売上（税抜き）
     type_params:
       measure: revenue
   - name: order_cost
-    description: Sum of cost for each order item.
-    label: Order Cost
+    description: 各注文アイテムの費用の合計。
+    label: 注文品の合計費用
     type: simple
     type_params:
       measure: order_cost
   - name: median_revenue
-    description: The median revenue for each order item. Excludes tax.
+    description: 各注文項目の売上中央値。税抜き。
     type: simple
-    label: Median Revenue
+    label: 売上中央値（税抜き）
     type_params:
       measure: median_revenue
   - name: food_revenue
-    description: The revenue from food in each order
-    label: Food Revenue
+    description: 注文における食べ物からの収入
+    label: 売上（食べ物のみ、税抜き）
     type: simple
     type_params:
       measure: food_revenue
   - name: drink_revenue
-    description: The revenue from drinks in each order
-    label: Drink Revenue
+    description: 注文における飲み物からの収入
+    label: 売上（飲み物のみ、税抜き）
     type: simple
     type_params:
       measure: drink_revenue
 
   # Ratio Metrics
   - name: food_revenue_pct
-    description: The % of order revenue from food.
-    label: Food Revenue %
+    description: 食べ物の売上の割合
+    label: 食べ物の売上割合（%、税抜き）
     type: ratio
     type_params:
       numerator: food_revenue
       denominator: revenue
   - name: drink_revenue_pct
-    description: The % of order revenue from drinks.
-    label: Drink Revenue %
+    description: 飲み物の売上の割合
+    label: 飲み物の売上割合（%、税抜き）
     type: ratio
     type_params:
       numerator: drink_revenue
@@ -132,9 +138,9 @@ metrics:
 
   # Derived Metrics
   - name: revenue_growth_mom
-    description: "Percentage growth of revenue compared to 1 month ago. Excluded tax"
+    description: 1ヶ月前と比べた収益の伸び率。税抜き
     type: derived
-    label: Revenue Growth % M/M
+    label: 1ヶ月前との売上比率（%、税抜き）
     type_params:
       expr: (current_revenue - revenue_prev_month)*100/revenue_prev_month
       metrics:
@@ -144,9 +150,9 @@ metrics:
           offset_window: 1 month
           alias: revenue_prev_month
   - name: order_gross_profit
-    description: Gross profit from each order.
+    description: 各注文からの粗利益
     type: derived
-    label: Order Gross Profit
+    label: 粗利益
     type_params:
       expr: revenue - cost
       metrics:
@@ -156,8 +162,8 @@ metrics:
 
   #Cumulative Metrics
   - name: cumulative_revenue
-    description: The cumulative revenue for all orders.
-    label: Cumulative Revenue (All Time)
+    description: 全注文からなる累積売上
+    label: 累積売上
     type: cumulative
     type_params:
       measure: revenue

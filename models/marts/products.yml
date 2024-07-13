@@ -14,13 +14,25 @@ semantic_models:
     dimensions:
       - name: product_name
         type: categorical
+        label: 商品名
+        description: 商品の名称
       - name: product_type
         type: categorical
+        label: 商品タイプ
+        description: 商品のタイプ
       - name: product_description
         type: categorical
+        label: 商品説明
+        description: 商品の説明
       - name: is_food_item
         type: categorical
+        label: 食べ物か？（True/False）
+        description: 食べ物かどうかのフラグ
       - name: is_drink_item
         type: categorical
+        label: 飲み物か？（True/False）
+        description: 飲み物かどうかのフラグ
       - name: product_price
         type: categorical
+        label: 商品単価
+        description: 商品の単価

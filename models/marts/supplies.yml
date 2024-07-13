@@ -14,11 +14,21 @@ semantic_models:
     dimensions:
       - name: supply_id
         type: categorical
+        label: サプライヤーID
+        description: サプライヤーのID
       - name: product_id
         type: categorical
+        label: 商品ID
+        description: 商品のID
       - name: supply_name
         type: categorical
+        label: サプライヤー名
+        description: サプライヤーの名称
       - name: supply_cost
         type: categorical
+        label: 調達コスト
+        description: 対象商品の調達にかかるコスト
       - name: is_perishable_supply
         type: categorical
+        label: 生鮮食品か？（True/False）
+        description: 生鮮食品かどうかのフラグ
